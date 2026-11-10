@@ -1,0 +1,80 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: test (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12", "3.13", "3.14"]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - run: pip install -e ".[dev]"
+      - run: ruff check .
+      - run: ruff format --check .
+      - run: mypy
+      - run: pytest --cov
+
+  larger-data:
+    # the same tests on bigger generated data and another seed
+    name: test on 100,000 orders
+    runs-on: ubuntu-latest
+    env:
+      DQCHECK_TEST_ROWS: "100000"
+      DQCHECK_TEST_SEED: "11"
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.14"
+          cache: pip
+      - run: pip install -e ".[dev]"
+      - run: pytest
+
+  other-systems:
+    name: test (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.14"
+      - run: pip install -e ".[dev]"
+      - run: pytest
+
+  docker:
+    name: docker image
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - run: docker build -t dqcheck .
+      - name: generate, check, profile, suggest, benchmark (read-only root, no capabilities, no network)
+        run: bash tools/docker_e2e.sh
+
+  docker-windows:
+    # the same flow driven from PowerShell, to keep that script honest (Linux containers on the runner)
+    name: docker flow from PowerShell
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - run: docker build -t dqcheck .
+      - name: PowerShell script
+        shell: pwsh
+        run: ./tools/docker_e2e.ps1 -Image dqcheck

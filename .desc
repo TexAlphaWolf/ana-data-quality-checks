@@ -1,0 +1,1 @@
+Data quality checks from a YAML file on DuckDB: every failing row reported, every rule tested against faults injected in known numbers.
