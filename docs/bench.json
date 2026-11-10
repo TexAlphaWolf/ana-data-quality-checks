@@ -1,0 +1,396 @@
+{
+ "environment": {
+  "dqcheck": "1.0.0",
+  "python": "3.14.10",
+  "duckdb": "2.0.0",
+  "pyyaml": "6.0.3",
+  "system": "Linux x86_64",
+  "cpus": 12,
+  "threads": 12,
+  "seed": 1,
+  "error_rate": 0.01,
+  "repeat": 5,
+  "command": "bench --sizes 100000,1000000,10000000 --repeat 5 --workdir /out --out /out",
+  "seconds": 87.4
+ },
+ "sizes": [
+  {
+   "orders": 100000,
+   "customers": 10000,
+   "parquet_bytes": 2508286,
+   "csv_bytes": 5780785,
+   "load_parquet_ms": 83.5,
+   "load_csv_ms": 241.5,
+   "check_ms": 38.1,
+   "rows_per_s": 2888636.4979647202,
+   "verified": true,
+   "mismatches": [],
+   "rules": {
+    "C01": {
+     "dataset": "customers",
+     "type": "unique",
+     "check": "unique(customer_id)",
+     "failing_rows": 0,
+     "median_ms": 1.755
+    },
+    "C02": {
+     "dataset": "customers",
+     "type": "not_null",
+     "check": "not_null(email)",
+     "failing_rows": 0,
+     "median_ms": 0.679
+    },
+    "C03": {
+     "dataset": "customers",
+     "type": "regex",
+     "check": "regex(email)",
+     "failing_rows": 100,
+     "median_ms": 2.362
+    },
+    "C04": {
+     "dataset": "customers",
+     "type": "allowed_values",
+     "check": "allowed_values(country)",
+     "failing_rows": 100,
+     "median_ms": 1.706
+    },
+    "C05": {
+     "dataset": "customers",
+     "type": "range",
+     "check": "range(signup_date)",
+     "failing_rows": 0,
+     "median_ms": 1.005
+    },
+    "O01": {
+     "dataset": "orders",
+     "type": "unique",
+     "check": "unique(order_id)",
+     "failing_rows": 2000,
+     "median_ms": 6.531
+    },
+    "O02": {
+     "dataset": "orders",
+     "type": "not_null",
+     "check": "not_null(customer_id)",
+     "failing_rows": 1000,
+     "median_ms": 0.995
+    },
+    "O03": {
+     "dataset": "orders",
+     "type": "foreign_key",
+     "check": "foreign_key(customer_id)",
+     "failing_rows": 1000,
+     "median_ms": 6.16
+    },
+    "O04": {
+     "dataset": "orders",
+     "type": "not_null",
+     "check": "not_null(amount_cents)",
+     "failing_rows": 1000,
+     "median_ms": 0.933
+    },
+    "O05": {
+     "dataset": "orders",
+     "type": "range",
+     "check": "range(amount_cents)",
+     "failing_rows": 1000,
+     "median_ms": 1.179
+    },
+    "O06": {
+     "dataset": "orders",
+     "type": "allowed_values",
+     "check": "allowed_values(status)",
+     "failing_rows": 1000,
+     "median_ms": 2.588
+    },
+    "O07": {
+     "dataset": "orders",
+     "type": "expression",
+     "check": "expression",
+     "failing_rows": 1000,
+     "median_ms": 1.105
+    },
+    "O08": {
+     "dataset": "orders",
+     "type": "outliers",
+     "check": "outliers(amount_cents)",
+     "failing_rows": 1000,
+     "median_ms": 6.755
+    },
+    "O09": {
+     "dataset": "orders",
+     "type": "range",
+     "check": "range(ordered_at)",
+     "failing_rows": 1000,
+     "median_ms": 1.261
+    },
+    "O10": {
+     "dataset": "orders",
+     "type": "freshness",
+     "check": "freshness(ordered_at)",
+     "failing_rows": null,
+     "median_ms": 0.788
+    },
+    "O11": {
+     "dataset": "orders",
+     "type": "row_count",
+     "check": "row_count",
+     "failing_rows": null,
+     "median_ms": 0.012
+    }
+   }
+  },
+  {
+   "orders": 1000000,
+   "customers": 100000,
+   "parquet_bytes": 26189995,
+   "csv_bytes": 59994628,
+   "load_parquet_ms": 129.5,
+   "load_csv_ms": 1420.9,
+   "check_ms": 109.0,
+   "rows_per_s": 10088318.829240276,
+   "verified": true,
+   "mismatches": [],
+   "rules": {
+    "C01": {
+     "dataset": "customers",
+     "type": "unique",
+     "check": "unique(customer_id)",
+     "failing_rows": 0,
+     "median_ms": 5.181
+    },
+    "C02": {
+     "dataset": "customers",
+     "type": "not_null",
+     "check": "not_null(email)",
+     "failing_rows": 0,
+     "median_ms": 0.865
+    },
+    "C03": {
+     "dataset": "customers",
+     "type": "regex",
+     "check": "regex(email)",
+     "failing_rows": 1000,
+     "median_ms": 12.399
+    },
+    "C04": {
+     "dataset": "customers",
+     "type": "allowed_values",
+     "check": "allowed_values(country)",
+     "failing_rows": 1000,
+     "median_ms": 3.763
+    },
+    "C05": {
+     "dataset": "customers",
+     "type": "range",
+     "check": "range(signup_date)",
+     "failing_rows": 0,
+     "median_ms": 0.971
+    },
+    "O01": {
+     "dataset": "orders",
+     "type": "unique",
+     "check": "unique(order_id)",
+     "failing_rows": 20000,
+     "median_ms": 16.596
+    },
+    "O02": {
+     "dataset": "orders",
+     "type": "not_null",
+     "check": "not_null(customer_id)",
+     "failing_rows": 10000,
+     "median_ms": 1.458
+    },
+    "O03": {
+     "dataset": "orders",
+     "type": "foreign_key",
+     "check": "foreign_key(customer_id)",
+     "failing_rows": 10000,
+     "median_ms": 21.48
+    },
+    "O04": {
+     "dataset": "orders",
+     "type": "not_null",
+     "check": "not_null(amount_cents)",
+     "failing_rows": 10000,
+     "median_ms": 1.812
+    },
+    "O05": {
+     "dataset": "orders",
+     "type": "range",
+     "check": "range(amount_cents)",
+     "failing_rows": 10000,
+     "median_ms": 1.589
+    },
+    "O06": {
+     "dataset": "orders",
+     "type": "allowed_values",
+     "check": "allowed_values(status)",
+     "failing_rows": 10000,
+     "median_ms": 4.225
+    },
+    "O07": {
+     "dataset": "orders",
+     "type": "expression",
+     "check": "expression",
+     "failing_rows": 10000,
+     "median_ms": 2.127
+    },
+    "O08": {
+     "dataset": "orders",
+     "type": "outliers",
+     "check": "outliers(amount_cents)",
+     "failing_rows": 10000,
+     "median_ms": 29.856
+    },
+    "O09": {
+     "dataset": "orders",
+     "type": "range",
+     "check": "range(ordered_at)",
+     "failing_rows": 10000,
+     "median_ms": 1.635
+    },
+    "O10": {
+     "dataset": "orders",
+     "type": "freshness",
+     "check": "freshness(ordered_at)",
+     "failing_rows": null,
+     "median_ms": 1.403
+    },
+    "O11": {
+     "dataset": "orders",
+     "type": "row_count",
+     "check": "row_count",
+     "failing_rows": null,
+     "median_ms": 0.017
+    }
+   }
+  },
+  {
+   "orders": 10000000,
+   "customers": 1000000,
+   "parquet_bytes": 266207311,
+   "csv_bytes": 621830164,
+   "load_parquet_ms": 580.3,
+   "load_csv_ms": 12361.3,
+   "check_ms": 825.9,
+   "rows_per_s": 13318364.766658451,
+   "verified": true,
+   "mismatches": [],
+   "rules": {
+    "C01": {
+     "dataset": "customers",
+     "type": "unique",
+     "check": "unique(customer_id)",
+     "failing_rows": 0,
+     "median_ms": 16.505
+    },
+    "C02": {
+     "dataset": "customers",
+     "type": "not_null",
+     "check": "not_null(email)",
+     "failing_rows": 0,
+     "median_ms": 1.087
+    },
+    "C03": {
+     "dataset": "customers",
+     "type": "regex",
+     "check": "regex(email)",
+     "failing_rows": 10000,
+     "median_ms": 22.648
+    },
+    "C04": {
+     "dataset": "customers",
+     "type": "allowed_values",
+     "check": "allowed_values(country)",
+     "failing_rows": 10000,
+     "median_ms": 6.504
+    },
+    "C05": {
+     "dataset": "customers",
+     "type": "range",
+     "check": "range(signup_date)",
+     "failing_rows": 0,
+     "median_ms": 1.485
+    },
+    "O01": {
+     "dataset": "orders",
+     "type": "unique",
+     "check": "unique(order_id)",
+     "failing_rows": 200000,
+     "median_ms": 171.725
+    },
+    "O02": {
+     "dataset": "orders",
+     "type": "not_null",
+     "check": "not_null(customer_id)",
+     "failing_rows": 100000,
+     "median_ms": 3.796
+    },
+    "O03": {
+     "dataset": "orders",
+     "type": "foreign_key",
+     "check": "foreign_key(customer_id)",
+     "failing_rows": 100000,
+     "median_ms": 241.983
+    },
+    "O04": {
+     "dataset": "orders",
+     "type": "not_null",
+     "check": "not_null(amount_cents)",
+     "failing_rows": 100000,
+     "median_ms": 5.732
+    },
+    "O05": {
+     "dataset": "orders",
+     "type": "range",
+     "check": "range(amount_cents)",
+     "failing_rows": 100000,
+     "median_ms": 6.176
+    },
+    "O06": {
+     "dataset": "orders",
+     "type": "allowed_values",
+     "check": "allowed_values(status)",
+     "failing_rows": 100000,
+     "median_ms": 33.553
+    },
+    "O07": {
+     "dataset": "orders",
+     "type": "expression",
+     "check": "expression",
+     "failing_rows": 100000,
+     "median_ms": 9.906
+    },
+    "O08": {
+     "dataset": "orders",
+     "type": "outliers",
+     "check": "outliers(amount_cents)",
+     "failing_rows": 100000,
+     "median_ms": 309.462
+    },
+    "O09": {
+     "dataset": "orders",
+     "type": "range",
+     "check": "range(ordered_at)",
+     "failing_rows": 100000,
+     "median_ms": 4.538
+    },
+    "O10": {
+     "dataset": "orders",
+     "type": "freshness",
+     "check": "freshness(ordered_at)",
+     "failing_rows": null,
+     "median_ms": 3.539
+    },
+    "O11": {
+     "dataset": "orders",
+     "type": "row_count",
+     "check": "row_count",
+     "failing_rows": null,
+     "median_ms": 0.021
+    }
+   }
+  }
+ ]
+}
